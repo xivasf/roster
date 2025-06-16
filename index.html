@@ -19,7 +19,6 @@
       justify-content: center;
       min-height: 100vh;
       overflow-x: hidden;
-      overflow: hidden;
     }
 
     h1 {
@@ -88,6 +87,16 @@
     .card .role.staff {
       color: rgb(1, 63, 6);
     }
+  #dot-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 999;
+}
 #cursor {
   width: 15px;
   height: 15px;
@@ -372,8 +381,10 @@ body:not(.blur-active) .content {
     userCardsSection.style.display = isHidden ? 'flex' : 'none';
   });
 </script>
+<div id="dot-container"></div>
 <script>
   const cursor = document.getElementById('cursor');
+  const dotContainer = document.getElementById('dot-container');
 
   const hoverTargets = ['a', 'button', '.hoverable'];
 
@@ -394,7 +405,7 @@ body:not(.blur-active) .content {
     dot.className = 'dot';
     dot.style.left = Math.random() * window.innerWidth + 'px';
     dot.style.animationDuration = (2 + Math.random() * 3) + 's';
-    document.body.appendChild(dot);
+    dotContainer.appendChild(dot);
 
     setTimeout(() => {
       dot.remove();
