@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anti-Ext Roster</title>
+    <link rel="icon" type="image/x-icon" href="a.png">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+    body {
+      margin: 0;
+      background: #000;
+      color: white;
+      font-family: 'Share Tech Mono', monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 30px;
+    }
+
+    .roster {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .roster2 {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .card {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    width: 160px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(1px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    }
+
+    .card img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+
+    .card .name {
+      font-size: 1.1em;
+      margin-bottom: 4px;
+    }
+
+    .card .role.founder {
+      font-size: 0.85em;
+      color: yellow;
+    }
+
+    .card .role.member {
+      color: #808080;
+    }
+
+    .card .role.co {
+      color: rgb(167, 1, 1);
+    }
+
+    .card .role.manager {
+      color: rgb(3, 1, 126);
+    }
+    .card .role.staff {
+      color: rgb(1, 63, 6);
+    }
+#cursor {
+  width: 15px;
+  height: 15px;
+  border-radius: 9999px;
+  background-color: white;
+  position: fixed;
+  pointer-events: none;
+  z-index: 1000;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 10px white;
+  transition: transform 0.15s ease, box-shadow 0.3s ease;
+}
+
+#cursor.hover {
+  transform: translate(-50%, -50%) scale(1.6);
+  box-shadow: 0 0 20px white;
+}
+
+.particle {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background-color: white;
+  position: fixed;
+  pointer-events: none;
+  z-index: 999;
+  opacity: 1;
+  animation: fadeOut 0.5s ease-out forwards;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+
+.dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  top: 0;
+  animation: fall 5s linear infinite;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+#entry-overlay {
+  position: fixed;
+  top: 0;
+  left: 0; 
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: opacity 0.5s ease;
+}
+
+.entry-image {
+  max-width: 80%;
+  max-height: 60%;
+  filter: drop-shadow(0 0 10px rgb(24, 23, 23));
+  pointer-events: none; 
+}
+
+body.blur-active .content {
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+body:not(.blur-active) .content {
+  filter: none;
+  pointer-events: auto;
+  transition: filter 0.5s ease;
+}
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+.role-section {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  margin-top: 60px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.column h2 {
+  font-size: 1.8em;
+  margin-bottom: 20px;
+}
+  </style>
+</head>
+<body>
+    <div id="entry-overlay">
+  <img src="a.png" class="entry-image" />
+</div>
+
+<p style="font-size: 100px;"><span id="typed"></span></p>
+
+<div class="roster">
+  <div class="card">
+    <img draggable="false" src="https://cdn.discordapp.com/avatars/1367329668616683601/5ee44732a64da5fcb2eb6d062b9f23a9.png?size=4096" alt="Kurupt" />
+    <div class="name">Kurupt</div>
+    <div class="role founder">founder</div> 
+  </div>
+
+  <div class="card">
+    <img draggable="false" src="https://cdn.discordapp.com/attachments/1383531431396901008/1384259933402562792/GORE.jpg?ex=6851c806&is=68507686&hm=41ee251191593c6e6bf21ce224956bfc76bb8b509d4a37eeeac64d114ec0043c&" alt="Lost" />
+    <div class="name">Lost</div>
+    <div class="role member">Member</div>
+  </div>
+
+  <div class="card">
+    <img draggable="false" src="https://cdn.discordapp.com/attachments/1383531431396901008/1384260932531781865/IMG_3200.png?ex=6851c8f4&is=68507774&hm=85a3e365e064bf975e78aeb3f0f412da41d4bc2def06d5ec8f74190c6795b012&" alt="Cyanide" />
+    <div class="name">Cyanide</div>
+    <div class="role member">Member</div>
+  </div>
+
+  <div class="card">
+    <img draggable="false" src="https://cdn.discordapp.com/attachments/1383531431396901008/1384260989129592842/avatars.png?ex=6851c902&is=68507782&hm=7911df7052c80fe73ca7cd427b1c268469cd3070f48014ce7c49be47f5763e43&" alt="Aqua" />
+    <div class="name">Aqua</div>
+    <div class="role member">Member</div>
+  </div>
+</div>
+<audio id="bg-music" loop>
+  <source src="g.mp3" type="audio/mpeg">
+</audio>
+
+<button id="mute-btn" style="
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1001;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 16px;
+  color: white;
+  font-family: 'Share Tech Mono', monospace;
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  display: none;
+">
+  🔈
+</button>
+
+<script>
+  const overlay = document.getElementById('entry-overlay');
+  const audio = document.getElementById('bg-music');
+  const muteBtn = document.getElementById('mute-btn');
+  const archiveBtn = document.getElementById('archive-btn');
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document.body.classList.add("blur-active");
+
+    overlay.addEventListener('click', function () {
+      document.body.classList.remove("blur-active");
+      overlay.style.opacity = '0';
+
+      setTimeout(() => {
+        overlay.style.display = 'none';
+      }, 500);
+
+      audio.volume = 0.5;
+      audio.play();
+      muteBtn.style.display = 'block';
+      archiveBtn.style.display = 'block';
+    });
+  });
+
+  muteBtn.addEventListener('click', () => {
+    audio.muted = !audio.muted;
+    muteBtn.textContent = audio.muted ? '🔇' : '🔈';
+  });
+
+  muteBtn.addEventListener('mouseenter', () => {
+    muteBtn.style.boxShadow = '0 0 20px rgba(255, 255, 255, 0.4)';
+  });
+
+  muteBtn.addEventListener('mouseleave', () => {
+    muteBtn.style.boxShadow = '0 0 10px rgba(255, 255, 255, 0.1)';
+  });
+
+  archiveBtn.addEventListener('click', () => {
+    window.location.href = 'archives/index.html';
+  });
+
+  archiveBtn.addEventListener('mouseenter', () => {
+    archiveBtn.style.boxShadow = '0 0 20px rgba(255, 255, 255, 0.4)';
+  });
+
+  archiveBtn.addEventListener('mouseleave', () => {
+    archiveBtn.style.boxShadow = '0 0 10px rgba(255, 255, 255, 0.1)';
+  });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+<script>
+  var typed = new Typed("#typed", {
+    strings: ["Anti-Ext Roster"],
+    typeSpeed: 80,
+    backSpeed: 80,
+    backDelay: 500,
+    loop: true,
+    showCursor: true,
+    cursorChar: '|'
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.body.classList.add("blur-active");
+
+    const overlay = document.getElementById('entry-overlay');
+    overlay.addEventListener('click', function () {
+      document.body.classList.remove("blur-active");
+      overlay.style.opacity = '0';
+      setTimeout(() => {
+        overlay.style.display = 'none';
+      }, 500);
+    });
+  });
+</script>
+<script>
+  document.addEventListener('contextmenu', function (e) {
+    e.preventDefault();
+});
+    document.addEventListener('keydown', function(event) {
+        if (event.ctrlKey && event.key === 's') {
+            event.preventDefault();
+            window.open('https://discord.gg/ngZQQvCguw', '_blank');
+        }
+        if (event.ctrlKey && event.key === 'u') {
+            event.preventDefault();
+            window.open('https://discord.gg/ngZQQvCguw', '_blank');
+        }
+        if (event.ctrlKey && event.shiftKey && event.key === 'I') {
+            event.preventDefault();
+            window.open('https://discord.gg/ngZQQvCguw', '_blank');
+        }
+        if (event.key === 'F12') {
+            event.preventDefault();
+            window.open('https://discord.gg/ngZQQvCguw', '_blank');
+        }
+          });
+</script>
+<script>
+  const toggleBtn = document.getElementById('toggle-users');
+  const userCardsSection = document.getElementById('roster2');
+
+  toggleBtn.addEventListener('click', () => {
+    const isHidden = userCardsSection.style.display === 'none';
+    userCardsSection.style.display = isHidden ? 'flex' : 'none';
+  });
+</script>
+<script>
+  const cursor = document.getElementById('cursor');
+
+  const hoverTargets = ['a', 'button', '.hoverable'];
+
+  document.addEventListener('mouseover', (e) => {
+    if (hoverTargets.some(sel => e.target.closest(sel))) {
+      cursor.classList.add('hover');
+    }
+  });
+
+  document.addEventListener('mouseout', (e) => {
+    if (hoverTargets.some(sel => e.target.closest(sel))) {
+      cursor.classList.remove('hover');
+    }
+  });
+
+  function createDot() {
+    const dot = document.createElement('div');
+    dot.className = 'dot';
+    dot.style.left = Math.random() * window.innerWidth + 'px';
+    dot.style.animationDuration = (2 + Math.random() * 3) + 's';
+    document.body.appendChild(dot);
+
+    setTimeout(() => {
+      dot.remove();
+    }, 5000);
+  }
+
+  setInterval(createDot, 100);
+</script>
+<script src="https://assets.guns.lol/cursor-effects.js"></script>
+  <script>
+    window.onload = () => {
+      new cursoreffects.fairyDustCursor({
+        colors: ["#ffffff"]
+      });
+    };
+  </script>
+<div style="height: 150px;"></div> 
+</div>
+</body>
+</html>
